@@ -1,0 +1,140 @@
+﻿html {
+    font-size: 14px;
+}
+
+.required:after {
+    content: " *";
+    color: red;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+S
+/* Estilos para los enlaces dentro del offcanvas */
+.offcanvas-body a {
+    transition: background-color 0.3s ease;
+    padding: 5px;
+    display: block; /* Para que el padding y el background-color ocupen todo el ancho */
+}
+
+/* Estilo al pasar el cursor */
+.offcanvas-body a:hover {
+    background-color: #dcdada;
+}
+
+
+
+/*BOTON ESTILO OREJAS DE MAPACHE*/
+.contenedor-boton {
+    position: relative;
+    display: inline-block;
+    margin: 15px;
+}
+
+.boton-mapache {
+    border: 2px solid transparent;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 10px;
+    height: 50px;
+    width: 250px;
+    background-color: #b0abab;
+}
+
+    .boton-mapache:hover {
+        border: 3px solid black;
+        border-radius: 10px;
+        font-weight: bold;
+    }
+
+.oreja {
+    position: absolute;
+    width: 30px; /* Ajusta el tamaño de las imágenes */
+    height: 30px;
+    display: none;
+}
+
+.oreja-izquierda {
+    top: -25px;
+    left: 5px;
+}
+
+.oreja-derecha {
+    top: -25px;
+    right: 5px;
+}
+
+.contenedor-boton:hover .oreja {
+    display: block;
+}
+
+/*BOTON MAPACHE: SOLO PARA BOTONES DE ACEPTAR(LOGIN)*/
+.boton-mapacheAceptar {
+    border: 2px solid transparent;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 10px;
+    height: 50px;
+    width: 100px;
+    background-color: #b0abab;
+}
+
+    .boton-mapacheAceptar:hover {
+        border: 3px solid black;
+        border-radius: 10px;
+        font-weight: bold;
+    }
+
+
+/*OREJAS PARA LAS TARJETAS DE MENU CIUDADANO*/
+.contenedor-tarjeta {
+    position: relative;
+    display: inline-block;
+}
+
+.oreja {
+    position: absolute;
+    width: 30px; /* Ajusta el tamaño de las orejas */
+    height: 30px;
+    display: none;
+}
+
+.oreja-izquierda {
+    top: -25px; /* Ajusta la posición vertical */
+    left: 10px; /* Ajusta la posición horizontal */
+}
+
+.oreja-derecha {
+    top: -25px;
+    right: 10px;
+}
+
+.contenedor-tarjeta:hover .oreja {
+    display: block;
+}
+
+/* Estilo de la tarjeta al pasar el cursor */
+.contenedor-tarjeta:hover .card {
+    border: 3px solid black;
+    border-radius: 10px;
+    font-weight: bold;
+}
