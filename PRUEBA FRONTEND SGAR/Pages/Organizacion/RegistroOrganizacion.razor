@@ -1,4 +1,6 @@
 ﻿@page "/registro-organizacion"
+@using PRUEBA_FRONTEND_SGAR.Services
+@inject MunicipioService MunicipioService
 @inject HttpClient Http
 @inject IJSRuntime JS
 
@@ -77,10 +79,11 @@
     {
         try
         {
-            municipios = await Http.GetFromJsonAsync<List<Municipio>>("https://sgar-navigation.vercel.app/api-docs/");
+            municipios = await MunicipioService.ObtenerMunicipiosAsync();
         }
-        catch
+        catch (Exception ex)
         {
+            Console.WriteLine($"Error al cargar municipios: {ex.Message}");
             municipios = new List<Municipio>();
         }
     }
@@ -105,7 +108,7 @@
             tipoNotificacion = tiposNotificacion
         };
 
-        var response = await Http.PostAsJsonAsync("http://sgarseguridad.somee.com/organization", data);
+        var response = await Http.PostAsJsonAsync("api/organization", data);
 
         if (response.IsSuccessStatusCode)
         {
@@ -124,15 +127,18 @@
         notifProximidad = notifInicioRuta = notifTiempoReal = false;
     }
 
-    public class Municipio
-    {
-        public int Id { get; set; }
-        public string Nombre { get; set; } = "";
-    }
-
     public class ResponseMessage
     {
         public string Message { get; set; } = "";
         public int Id { get; set; }
     }
 }
+
+
+
+
+
+
+
+
+

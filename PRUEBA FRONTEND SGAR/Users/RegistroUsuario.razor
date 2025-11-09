@@ -80,6 +80,11 @@
     {
         try
         {
+            // Convierte la foto a Base64 solo si existe
+            string? fotoBase64 = null;
+            if (foto != null && foto.Length > 0)
+                fotoBase64 = Convert.ToBase64String(foto);
+
             var data = new
             {
                 id = 0,
@@ -88,12 +93,12 @@
                 telefono,
                 email,
                 dui,
-                foto = "", // vacío si no se sube imagen
+                foto = fotoBase64 ?? "", // cadena vacía si no se sube imagen
                 password,
                 idRol = 1 // Ciudadano automático
             };
 
-            var response = await Http.PostAsJsonAsync("http://sgarseguridad.somee.com/api/user/", data);
+            var response = await Http.PostAsJsonAsync("api/user", data);
 
             if (response.IsSuccessStatusCode)
             {
@@ -112,7 +117,6 @@
             await JS.InvokeVoidAsync("alert", $"⚠️ Error de conexión: {ex.Message}");
         }
     }
-
 
     private void Cancelar()
     {
