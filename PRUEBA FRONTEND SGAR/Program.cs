@@ -23,6 +23,8 @@ builder.Services.AddHttpClient("NavigationAPI", client =>
 
 //Servicio de autenticación
 builder.Services.AddScoped<AuthService>();
-builder.Services.AddScoped<MunicipioService>(); 
+builder.Services.AddScoped<MunicipioService>();
+builder.Services.AddScoped<AuthSeguridadService>();
+
 
 await builder.Build().RunAsync();
