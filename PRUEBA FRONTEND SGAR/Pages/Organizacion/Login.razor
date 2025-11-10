@@ -1,5 +1,5 @@
 ﻿@page "/login"
-@inject AuthService AuthService
+@inject AuthService AuthOrganizationService
 @inject NavigationManager Navigation
 @inject IJSRuntime JS
 
@@ -55,8 +55,7 @@
         z-index: 5;
     }
 
-    /* ========== ESTILOS DE OREJAS MAPACHE ========== */
-
+    /* Botón mapache */
     .contenedor-boton {
         position: relative;
         display: inline-block;
@@ -110,7 +109,7 @@
     <div class="col-md-6 mx-auto">
         <div class="card p-3 rounded-4">
             <div class="card-body">
-                <!-- Logo centrado -->
+                <!-- Logo -->
                 <div class="d-flex justify-content-center mb-3">
                     <img src="css/sgarlogo.jpeg" width="200" height="200" />
                 </div>
@@ -119,7 +118,7 @@
                     <DataAnnotationsValidator />
                     <ValidationSummary />
 
-                    <!-- Campo de correo -->
+                    <!-- Email -->
                     <div class="form-group mb-3 position-relative">
                         <div class="input-group">
                             <InputText @bind-Value="credenciales.Email"
@@ -133,7 +132,7 @@
                         <label class="input-label required">Correo</label>
                     </div>
 
-                    <!-- Campo de contraseña -->
+                    <!-- Password -->
                     <div class="form-group mb-4 position-relative">
                         <div class="input-group">
                             <InputText @bind-Value="credenciales.Password"
@@ -149,7 +148,7 @@
                         <label class="input-label required">Contraseña</label>
                     </div>
 
-                    <!-- Botón de login con orejitas -->
+                    <!-- Botón login -->
                     <div class="d-flex justify-content-center">
                         <div class="contenedor-boton">
                             <button type="submit" class="boton-mapacheAceptar text-center">Aceptar</button>
@@ -180,21 +179,26 @@
     {
         errorMensaje = null;
 
-        var token = await AuthService.LoginAsync(credenciales);
+        var token = await AuthOrganizationService.LoginAsync(credenciales);
 
         if (string.IsNullOrEmpty(token))
         {
-            errorMensaje = "Credenciales inválidas";
+            errorMensaje = "Credenciales inválidas. Verifica tu correo y contraseña.";
             return;
         }
 
-        await JS.InvokeVoidAsync("localStorage.setItem", "token", token);
-        Navigation.NavigateTo("/home");
+        var jwt = await AuthOrganizationService.ObtenerTokenDecodificado();
+
+        var email = jwt?.Claims.FirstOrDefault(c => c.Type == "email")?.Value;
+        var rol = jwt?.Claims.FirstOrDefault(c => c.Type == "role")?.Value;
+        var orgId = jwt?.Claims.FirstOrDefault(c => c.Type == "nameid")?.Value;
+
+        Console.WriteLine($"Organización logueada: {email} - Rol: {rol} - Id: {orgId}");
+
+        await JS.InvokeVoidAsync("localStorage.setItem", "orgEmail", email ?? "");
+        await JS.InvokeVoidAsync("localStorage.setItem", "orgRole", rol ?? "");
+        await JS.InvokeVoidAsync("localStorage.setItem", "orgId", orgId ?? "");
+
+        Navigation.NavigateTo("/home", true);
     }
 }
-
-
-
-
-
-
